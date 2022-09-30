@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react"
+import { Fragment } from "react"
 import Head from "next/head"
 import Image from "next/image"
 import styles from "../styles/Home.module.css"
@@ -120,34 +120,6 @@ const footerNavigation = {
 }
 
 export default function Home() {
-  const [fullName, setFullName] = useState("")
-  const [email, setEmail] = useState("")
-  const [subject, setSubject] = useState("")
-  const [message, setMessage] = useState("")
-
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    const response = await fetch("/api/sendgrid", {
-      body: JSON.stringify({
-        email,
-        fullName,
-        subject,
-        message,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-      method: "POST",
-    })
-
-    const { error } = await response.json
-
-    if (error) {
-      console.log(error)
-      return
-    }
-  }
-
   return (
     <div className="bg-white">
       <Head>
@@ -513,7 +485,8 @@ export default function Home() {
                     Send us a message
                   </h3>
                   <form
-                    onSubmit={handleSubmit}
+                    action="#"
+                    method="POST"
                     className="mt-6 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8"
                   >
                     <div>
@@ -522,9 +495,6 @@ export default function Home() {
                       </label>
                       <div className="mt-1">
                         <input
-                          onChange={(e) => {
-                            setFullName(e.target.value)
-                          }}
                           type="text"
                           name="first-name"
                           id="first-name"
@@ -540,9 +510,6 @@ export default function Home() {
                       <div className="mt-1">
                         <input
                           type="email"
-                          onChange={(e) => {
-                            setEmail(e.target.value)
-                          }}
                           name="last-name"
                           autoComplete="email"
                           id="last-name"
@@ -560,9 +527,6 @@ export default function Home() {
                       </label>
                       <div className="mt-1">
                         <input
-                          onChange={(e) => {
-                            setSubject(e.target.value)
-                          }}
                           type="text"
                           name="subject"
                           id="subject"
@@ -587,9 +551,6 @@ export default function Home() {
                       </div>
                       <div className="mt-1">
                         <textarea
-                          onChange={(e) => {
-                            setMessage(e.target.value)
-                          }}
                           id="message"
                           name="message"
                           rows={4}
